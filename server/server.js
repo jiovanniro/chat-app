@@ -21,17 +21,16 @@ app.use(express.static(clientPath));
 io.on('connection', (socket) => {
     console.log('New user connected');
 
-    //emit used to emit events on client and server side
-    socket.emit('newMessage', {
-        from: 'jio', 
-        text: 'Hey, can you meet up at 6',
-        createdAt: 123
-    });
-
     //expecting some data from the client 
-    //so set that data as the arg to the callback -- newEmail
-    socket.on('createMessage', (newMessage) => {
-        console.log('newMessage', newMessage);
+    //that data is set as the arg to the callback -- message
+    socket.on('createMessage', (message) => {
+        console.log('newMessage', message);
+        io.emit('newMessage', {
+            //getting from and text property from the client
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        })
     });
 
     socket.on('disconnect', () => {
