@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
-    "start": "nodemon server/server.js"
+    "start": "nodemon server/server.js",    
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "engine": {
-    "node": "6.2.2"
+  "engines": {
+    "node": "8.9.1"
   },
   "author": "jiovanni r",
   "license": "ISC",
