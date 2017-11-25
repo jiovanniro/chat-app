@@ -21,6 +21,19 @@ app.use(express.static(clientPath));
 io.on('connection', (socket) => {
     console.log('New user connected');
 
+    socket.emit('newMessage', {
+        //getting from and text property from the client
+        from: 'admin',
+        text: 'Welcome to the chat app bruh',
+        createdAt: new Date().getTime()
+    })
+
+    socket.broadcast.emit('newMessage', {
+        from: 'admin',
+        text: 'New user joined',
+        createdAt: new Date().getTime()       
+    }); 
+
     //expecting some data from the client 
     //that data is set as the arg to the callback -- message
     socket.on('createMessage', (message) => {
@@ -31,6 +44,14 @@ io.on('connection', (socket) => {
             text: message.text,
             createdAt: new Date().getTime()
         })
+
+        //broadcasting
+        //specific the socket to not send 
+        // socket.broadcast.emit('newMessage', {
+        //     from: message.from,
+        //     text: message.text,
+        //     createdAt: new Date().getTime()       
+        // });
     });
 
     socket.on('disconnect', () => {
