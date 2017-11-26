@@ -1,5 +1,24 @@
 let socket = io(); //request to the server to open a websocket and maintain the connection
 
+function scrollToBottom() {
+    //selectors
+    let messages = $('#messages');
+
+    //heights
+    let clientHeight = messages.prop('clientHeight'); //.prop is a crossbrowser compatible way to fetch a property
+    let scrollTop = messages.prop('scrollTop');
+    let scrollHeight = messages.prop('scrollHeight');
+
+    //message height
+    let newMessage = messages.children('li:last-child'); 
+    let newMessageHeight = newMessage.innerHeight();
+    let lastMessageHeight = newMessage.prev().innerHeight(); 
+
+    if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+        //scrollTop is the jQuery message for setting the value
+        messages.scrollTop(scrollHeight);
+    }
+}
 
 //adding an event listener on connect to server
 socket.on('connect', function() {
@@ -32,6 +51,7 @@ socket.on('newMessage', function(message) {
     });
 
     $('#messages').append(html);
+    scrollToBottom();
 
     // let formattedTime = moment(message.createdAt).format('hh:mm A');
     // console.log('New message', message);
