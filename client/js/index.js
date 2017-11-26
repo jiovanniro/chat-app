@@ -22,9 +22,10 @@ $('[name=message]').on("keyup", function(){
 //custom event 
 //the data emitted w/ your event is the first arg to the callback
 socket.on('newMessage', function(message) {
+    let formattedTime = moment(message.createdAt).format('hh:mm A');
     console.log('New message', message);
     let li = $('<li></li>');
-    li.text(`${message.from}: ${message.text}`);
+    li.text(`${message.from} ${formattedTime}: ${message.text}`);
 
     $('#messages').append(li);
 });
@@ -41,5 +42,4 @@ $('#message-form').on('submit', function(error) {
         messageField.val("");
     });
 });
-
 

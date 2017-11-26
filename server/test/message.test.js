@@ -9,7 +9,6 @@ describe('generateMessage', () => {
         let text = 'A cool message';
         
         let message = generateMessage(from, text);
-        console.log(message);
 
         expect(message).toInclude({from, text});  
         expect(message.createdAt).toBeA('number');
