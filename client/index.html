@@ -1,47 +1,31 @@
 <!DOCTYPE html>
+
 <html>
     <head>
-        <title>Chat App</title>
+        <title>Join | Chat App</title>
         <meta charset="utf-8">
-
-        <link rel="stylesheet" href="/css/styles.css" type="text/css"
+        <meta name="viewport" content="width=device-width, intial-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="/css/styles.css" type="text/css"        
     </head>
-    <body class="chat">
-        <div class="chat-sidebar">
-            <h3>Drop a line</h3>
-            <div id="users"></div>
-        </div>
-
-        <div class="chat-main">
-            <ol id="messages" class="chat-messages"></ol>        
-
-            <div class="chat-footer">
-                <form id="message-form">
-                    <input type="text" name="message" placeholder="Message" autofocus>
-                    <button id="chat-send" disabled>Send</button>
-                </form>
-            </div>
-
-        <!-- A template for mustachJS -->
-        <script id="message-template" type="text/template">
-            <li class="message">
-                <div class="message-title">
-                    <h4>{{from}}</h4>
-                    <span>{{createdAt}}</h4>
+    <body class="centered-form">
+        <div class="centered-form__form">
+            <!-- action: which page to go to -->
+            <form action="/chat.html">
+                <div class="form-field">
+                    <h3>Join a Chat</h3>
                 </div>
-                <div class="message-body">
-                    <p>{{text}}</p>
+                <div class="form-field">
+                    <label>Display name</label>
+                    <input type="text" name="name" autofocus placeholder="your name">
                 </div>
-            </li>
-        </script>
-
+                <div class="form-field">
+                    <label>Room name</label>
+                    <input type="text" name="room" placeholder="room">                </div>
+                <div class="form-field">
+                    <button>Join</button>
+                </div>
+            </form>
         </div>
-
-        <!-- loading in the socket library -->
-        <script src="/socket.io/socket.io.js"></script> 
-        <script src="/js/libs/jquery-3.1.0.min.js"></script>
-        <script src="/js/libs/moment.js"></script>
-        <script src="/js/libs/mustache.js"></script>
-        <script src="/js/index.js"></script>
     </body>
 </html>
+
