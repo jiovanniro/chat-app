@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const socketIO = require('socket.io');
 
+const {generateMessage} = require('./utils/message')
 let clientPath = path.join(__dirname, '/../client');
 let port = process.env.PORT || 3000;
 let app = express();
@@ -21,37 +22,25 @@ app.use(express.static(clientPath));
 io.on('connection', (socket) => {
     console.log('New user connected');
 
-    socket.emit('newMessage', {
-        //getting from and text property from the client
-        from: 'admin',
-        text: 'Welcome to the chat app bruh',
-        createdAt: new Date().getTime()
-    })
+    socket.emit('newMessage', generateMessage(
+        'Admin', 
+        'Welcome to the chat app'
+    ));
 
-    socket.broadcast.emit('newMessage', {
-        from: 'admin',
-        text: 'New user joined',
-        createdAt: new Date().getTime()       
-    }); 
+    socket.broadcast.emit('newMessage', generateMessage(
+        'Admin', 
+        'New user joined'
+    ));
 
     //expecting some data from the client 
     //that data is set as the arg to the callback -- message
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('newMessage', message);
-        io.emit('newMessage', {
-            //getting from and text property from the client
-            from: message.from,
-            text: message.text,
-            createdAt: new Date().getTime()
-        })
-
-        //broadcasting
-        //specific the socket to not send 
-        // socket.broadcast.emit('newMessage', {
-        //     from: message.from,
-        //     text: message.text,
-        //     createdAt: new Date().getTime()       
-        // });
+        io.emit('newMessage', generateMessage(
+            message.from, 
+            message.text
+        ));
+        callback('This is from the server'); //will call the callback function in the client
     });
 
     socket.on('disconnect', () => {
