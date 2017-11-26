@@ -11,6 +11,14 @@ socket.on('disconnect', function() {
     console.log('Disconnected from server');
 });
 
+$('[name=message]').on("keyup", function(){
+    if($('[name=message]').val().length > 0) {
+        $('#chat-send').removeAttr('disabled');
+    } else {
+        $('#chat-send').attr('disabled', 'disabled'); 
+    }  
+});
+
 //custom event 
 //the data emitted w/ your event is the first arg to the callback
 socket.on('newMessage', function(message) {
@@ -21,21 +29,17 @@ socket.on('newMessage', function(message) {
     $('#messages').append(li);
 });
 
-socket.emit('createMessage', {
-    from: 'jio',
-    text: 'Sup'
-    //run when the ack has been sent from the server to client
-}, function(data) {
-    console.log('Got it', data);
-});
-
 $('#message-form').on('submit', function(error) {
     error.preventDefault();
 
+    let messageField = $('[name=message]');
+
     socket.emit('createMessage', {
         from: 'User',
-        text: $('[name=message]').val()
+        text: messageField.val()
     }, function () {
-
+        messageField.val("");
     });
 });
+
+

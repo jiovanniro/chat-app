@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
             message.from, 
             message.text
         ));
-        callback('This is from the server'); //will call the callback function in the client
+        callback(); //will call the callback function in the client
     });
 
     socket.on('disconnect', () => {
