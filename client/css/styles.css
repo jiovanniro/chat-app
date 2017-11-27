@@ -198,8 +198,8 @@
   }
 
   @media (max-width: 400px) {
-    .message {
-      margin: 10%;
+    .chat-footer {
+      margin-bottom: 10%;
       max-width: 100%;
       width: 100%;
     }
