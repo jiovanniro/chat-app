@@ -197,9 +197,9 @@
     }
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     .chat-footer {
-      margin-bottom: 10%;
+      margin-bottom: 20%;
       max-width: 100%;
       width: 100%;
     }
