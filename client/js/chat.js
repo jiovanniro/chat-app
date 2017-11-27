@@ -22,7 +22,18 @@ function scrollToBottom() {
 
 //adding an event listener on connect to server
 socket.on('connect', function() {
-    console.log('Connected to server');
+    //console.log('Connected to server');
+    let params = $.deparam(window.location.search);
+
+    //requiring the user to enter name and room before joining
+    socket.emit('join', params, function (error) {
+        if (error) {
+            alert(error);
+            window.location.href = '/';
+        } else {
+            console.log('No error');
+        }
+    });
 });
 
 
@@ -30,12 +41,23 @@ socket.on('disconnect', function() {
     console.log('Disconnected from server');
 });
 
+//requiring the user to enter text in the message field before sending 
 $('[name=message]').on("keyup", function(){
     if($('[name=message]').val().length > 0) {
         $('#chat-send').removeAttr('disabled');
     } else {
         $('#chat-send').attr('disabled', 'disabled'); 
     }  
+});
+
+socket.on('updateUserList', function(users) {
+    let ol = $('<ol></ol>');
+
+    users.forEach(function (user) {
+        ol.append($('<li></li>').text(user));
+    });
+
+    $('#users').html(ol);
 });
 
 //custom event 
