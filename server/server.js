@@ -61,11 +61,20 @@ io.on('connection', (socket) => {
     //expecting some data from the client 
     //that data is set as the arg to the callback -- message
     socket.on('createMessage', (message, callback) => {
-        console.log('newMessage', message);
-        io.emit('newMessage', generateMessage(
-            message.from, 
-            message.text
-        ));
+        
+        let user = users.getUser(socket.id);
+
+        if (user && isRealString(message.text)) {
+            io.to(user.room).emit('newMessage', generateMessage(
+                user.name, 
+                message.text               
+            ));
+            
+            // io.emit('newMessage', generateMessage(
+            //     message.from, 
+            //     message.text
+            // ));
+        }
         callback(); //will call the callback function in the client
     });
 
