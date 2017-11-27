@@ -1,12 +1,4 @@
 
-//add a user (id, name, room)
-
-//remove a user (id)
-
-//fetch a user (id)
-
-//get user list (room)
-
 class Users {
     constructor () {
         this.users = [];
