@@ -69,11 +69,6 @@ io.on('connection', (socket) => {
                 user.name, 
                 message.text               
             ));
-            
-            // io.emit('newMessage', generateMessage(
-            //     message.from, 
-            //     message.text
-            // ));
         }
         callback(); //will call the callback function in the client
     });
@@ -86,8 +81,6 @@ io.on('connection', (socket) => {
             io.to(user.room).emit('updateUserList', users.getUserList(user.room));       
             io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left`));     
         }
-
-
     });
 });
 
